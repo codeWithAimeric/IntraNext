@@ -1,0 +1,1 @@
+export { auth as midlleware } from '@/server/actions/auth'   
