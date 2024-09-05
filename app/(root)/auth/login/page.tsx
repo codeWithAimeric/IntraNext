@@ -42,6 +42,6 @@ export default function Login() {
         {/* {error && <p style={{ color: 'red' }}>{error}</p>} */}
         <button>Sign In</button>
       </form>
-      </div>
+    </div>
   );
 }
