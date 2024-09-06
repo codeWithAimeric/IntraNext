@@ -17,7 +17,7 @@ export default auth((req) => {
 })
 
 export const config = {
-  matcher: [], // Routes à protéger
+  matcher: ['/c/home/:path*'], 
 };
 
 export { auth as middleware } from "@/auth"
