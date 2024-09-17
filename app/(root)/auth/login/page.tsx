@@ -1,47 +1,59 @@
-import React from 'react';
-import { signIn } from "@/auth"
-// import { useEffect, useState } from 'react';
-import { loginSchema } from '@/lib/zod';
-import { useRouter } from 'next/navigation';
+"use client";
 
-export default function Login() {
-  
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { doCredentialLogin } from "@/server/actions";
+
+
+const LoginForm = () => {
+  const router = useRouter();
+  const [error, setError] = useState("");
+
+  async function onSubmit(event) {
+    event.preventDefault();
+    try {
+      const formData = new FormData(event.currentTarget);
+
+      const response = await doCredentialLogin(formData);
+
+      if (!!response.error) {
+        console.error(response.error);
+        setError(response.error.message);
+      } else {
+        router.push("/c/home");
+        window.location.reload();
+      }
+    } catch (e) {
+      console.error(e);
+      setError("Check your Credentials");
+    }
+  }
+
+
   return (
-    <div>
-      <h1>Login</h1>
-      <form
-      action={async (formData) => {
-        "use server"
-        const res = await signIn("credentials", {
-          redirect: false, 
-          email: formData.get("email"),
-          password: formData.get("password"),
-        });
-        console.log('res in login = = = = ',res );
-        if(res){
-          return {
-            redirect: {
-              destination: "/c/home",
-            },
-          };
-        } else {
-          // setError("Error in the login form");
-          console.log('not logged in');
+    <>
+      <div className="text-xl text-red-600">{error}</div>
+      <div>
+        <h1 className="text-center text-3xl font-extrabold text-gray-900">Login</h1>
+      </div>
+      <form className="my-5 p-5 border border-gray-300 rounded-lg shadow-md max-w-md mx-auto" onSubmit={onSubmit}>
+        <div className="mb-4">
+          <label htmlFor="email" className="block text-gray-700 text-sm font-medium mb-2">Email Address</label>
+          <input className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="email" name="email" id="email" />
+        </div>
 
-        }
-      }}
-      >
-        <label>
-          Email
-          <input name="email" type="email" />
-        </label>
-        <label>
-          Password
-          <input name="password" type="password" />
-        </label>
-        {/* {error && <p style={{ color: 'red' }}>{error}</p>} */}
-        <button>Sign In</button>
+        <div className="mb-6">
+          <label htmlFor="password" className="block text-gray-700 text-sm font-medium mb-2">Password</label>
+          <input className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" name="password" id="password" />
+        </div>
+
+        <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full transition-colors">
+          Login
+        </button>
       </form>
-    </div>
+
+    </>
   );
-}
+};
+
+export default LoginForm;
