@@ -21,21 +21,21 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-gray-50 text-gray-900`}>
-        <header className="bg-white shadow-md">
-          <div className="container mx-auto p-4">
+      <body className="bg-gray-50 text-gray-900">
+        <header className="bg-white shadow-lg">
+          <div className="container mx-auto px-4 py-6">
             <NavBar />
           </div>
         </header>
-        <main className="container mx-auto p-4">
+        <main className="container mx-auto px-4 py-6">
           {children}
         </main>
-        <footer className="bg-gray-800 text-white mt-10">
-          <div className="container mx-auto p-4 text-center">
+        <footer className="bg-gray-900 text-white mt-10 py-4">
+          <div className="container mx-auto text-center">
             © 2024 IntraNext App. All rights reserved.
           </div>
         </footer>
       </body>
-  </html>
+    </html>
   );
 }

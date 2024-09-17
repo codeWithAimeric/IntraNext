@@ -1,6 +1,6 @@
 'use client';
-import React, {useState} from 'react';
-import {z} from 'zod';
+import React, { useState } from 'react';
+import { z } from 'zod';
 import { registerSchema } from '@/lib/zod';
 import { useRouter } from 'next/navigation';
 
@@ -19,7 +19,7 @@ export default function SignIn() {
       setError(validationResult.error.errors[0].message);
       return;
     }
-    
+
     try {
       const res = await fetch('/api/auth/register', {
         method: 'POST',
@@ -31,23 +31,23 @@ export default function SignIn() {
           password,
         }),
       });
-      if(res.ok) {
+      if (res.ok) {
         router.push('/auth/login');
       }
-    }catch(error) { 
+    } catch (error) {
       console.log(error);
     }
-      
+
 
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="flex flex-col items-center justify-center  bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
           <h1 className="text-center text-3xl font-extrabold text-gray-900">Register</h1>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <form className="mt-4 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
               <label htmlFor="email" className="sr-only">
@@ -78,9 +78,9 @@ export default function SignIn() {
               />
             </div>
           </div>
-    
-          {error && <p className="text-red-500 text-sm">{error}</p>}
-    
+
+          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+
           <div>
             <button
               type="submit"
