@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import { signInSchema } from "./lib/zod";
 import { ZodError } from "zod";
 import GoogleProvider from "next-auth/providers/google";
+import GitHubProvider from "next-auth/providers/github";
 
 export const {
   handlers: { GET, POST },
@@ -52,12 +53,23 @@ export const {
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       authorization: {
-          params: {
-              prompt: "consent",
-              access_type: "offline",
-              response_type: "code",
-          },
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
       },
-  })
+    }),
+    GitHubProvider({
+      clientId: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
+    }),
   ],
 });
