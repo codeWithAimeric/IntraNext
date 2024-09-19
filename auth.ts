@@ -4,6 +4,7 @@ import prisma from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { signInSchema } from "./lib/zod";
 import { ZodError } from "zod";
+import GoogleProvider from "next-auth/providers/google";
 
 export const {
   handlers: { GET, POST },
@@ -18,8 +19,6 @@ export const {
         password: {},
       },
       async authorize(credentials) {
-        console.log("credentials = =  = = =  == ", credentials);
-        
         try {
           const { email, password } = await signInSchema.parseAsync(
             credentials
@@ -49,5 +48,16 @@ export const {
         }
       },
     }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      authorization: {
+          params: {
+              prompt: "consent",
+              access_type: "offline",
+              response_type: "code",
+          },
+      },
+  })
   ],
 });
