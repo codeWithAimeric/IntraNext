@@ -5,7 +5,6 @@ import LogoutButton from './LogoutButton';
 
 const NavBar = async () => {
     const session = await auth();
-    console.log('session = = = = = ==', session);
     return (
         <nav className="bg-gray-800 p-4 shadow-lg">
             <div className="container mx-auto flex justify-between">
